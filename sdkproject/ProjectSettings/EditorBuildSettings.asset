@@ -4,4 +4,32 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Main.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/Drive/Drive.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/LocationProvider/LocationProvider.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/MeshGenerationBasics/MeshGeneration.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/MeshGenerationOnTerrain/MeshGenerationOnTerrain.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/MeshGenerationPois/PoiGeneration.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/MeshGenerationStyles/StylingDemoMeshGeneration.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/Playground/Scenes/Directions.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/Playground/Scenes/ForwardGeocoder.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/Playground/Scenes/RasterTile.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/Playground/Scenes/ReverseGeocoder.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/Playground/Scenes/VectorTile.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/SlippyTerrain/Slippy.unity
+  - enabled: 1
+    path: Assets/Mapbox/Examples/Voxels/Scenes/VoxelWorld.unity

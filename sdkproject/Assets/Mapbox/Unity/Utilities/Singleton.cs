@@ -15,7 +15,7 @@
 *
 */
 
-//#define SINGLETONS_VISIBLE
+#define SINGLETONS_VISIBLE
 
 namespace Mapbox.Unity.Utilities {
 

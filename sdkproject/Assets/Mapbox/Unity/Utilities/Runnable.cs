@@ -16,7 +16,7 @@
 */
 
 // Uncomment to enable debugging of the Runnable class.
-//#define ENABLE_RUNNABLE_DEBUGGING
+#define ENABLE_RUNNABLE_DEBUGGING
 
 namespace Mapbox.Unity.Utilities
 {
