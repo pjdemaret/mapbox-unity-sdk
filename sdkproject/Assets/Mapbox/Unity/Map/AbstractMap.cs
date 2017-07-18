@@ -75,7 +75,7 @@
 			}
 		}
 
-		float _worldRelativeScale;
+		float _worldRelativeScale = 1f;
 		public float WorldRelativeScale
 		{
 			get
@@ -108,7 +108,7 @@
 				_tileProvider.OnTileRemoved -= TileProvider_OnTileRemoved;
 			}
 
-			_mapVisualizer.Destroy();
+			_mapVisualizer.Clear();
 		}
 
 		// This is the part that is abstract?
@@ -120,13 +120,30 @@
 			var referenceTileRect = Conversions.TileBounds(TileCover.CoordinateToTileId(_mapCenterLatitudeLongitude, _zoom));
 			_mapCenterMercator = referenceTileRect.Center;
 
-			_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
-			Root.localScale = Vector3.one * _worldRelativeScale;
+			//_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
+			//Root.localScale = Vector3.one * _worldRelativeScale;
 
 			_mapVisualizer.Initialize(this, _fileSouce);
 			_tileProvider.Initialize(this);
-
+			_lastZoom = _zoom;
 			OnInitialized();
+		}
+
+		int _lastZoom;
+		void Update()
+		{
+			if (_zoom != _lastZoom)
+			{
+				var referenceTileRect = Conversions.TileBounds(TileCover.CoordinateToTileId(_mapCenterLatitudeLongitude, _zoom));
+				//_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
+				_mapCenterMercator = referenceTileRect.Center;
+				//_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
+				//Root.localScale = Vector3.one* _worldRelativeScale;
+				//_mapVisualizer.Clear();
+				_tileProvider.Clear();
+				_tileProvider.Initialize(this);
+				_lastZoom = _zoom;
+			}
 		}
 
 		void TileProvider_OnTileAdded(UnwrappedTileId tileId)
@@ -135,7 +152,7 @@
 			{
 				_worldHeightFixed = true;
 				var tile = _mapVisualizer.LoadTile(tileId);
-				if(tile.HeightDataState == MeshGeneration.Enums.TilePropertyState.Loaded)
+				if (tile.HeightDataState == MeshGeneration.Enums.TilePropertyState.Loaded)
 				{
 					var h = tile.QueryHeightData(.5f, .5f);
 					Root.transform.position = new Vector3(

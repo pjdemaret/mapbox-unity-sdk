@@ -97,8 +97,8 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 			if (tile.MeshFilter == null)
 			{
 				tile.gameObject.AddComponent<MeshFilter>();
-				CreateBaseMesh(tile);
 			}
+			CreateBaseMesh(tile);
 
 			if (_addCollider && tile.Collider == null)
 			{

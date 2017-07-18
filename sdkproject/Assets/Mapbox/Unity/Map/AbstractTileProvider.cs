@@ -43,6 +43,15 @@
 			OnTileRemoved(tile);
 		}
 
+		public void Clear()
+		{
+			foreach (var tile in _activeTiles)
+			{
+				OnTileRemoved(tile);
+			}
+			_activeTiles.Clear();
+		}
+
 		internal abstract void OnInitialized();
 	}
 }
