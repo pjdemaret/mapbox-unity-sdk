@@ -27,7 +27,7 @@ namespace Mapbox.Unity.Utilities
 		/// </summary>
 		/// <param name="v"> The <see cref="T:Mapbox.Utils.Vector2d"/>. </param>
 		/// <returns> A <see cref="T:UnityEngine.Vector2d"/> of coordinates in meters. </returns>
-		private static Vector2d LatLonToMeters(Vector2d v)
+		public static Vector2d LatLonToMeters(Vector2d v)
 		{
 			return LatLonToMeters(v.x, v.y);
 		}

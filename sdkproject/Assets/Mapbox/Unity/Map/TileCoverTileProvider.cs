@@ -1,4 +1,5 @@
-﻿namespace Mapbox.Unity.Map
+﻿using System.ComponentModel.Design;
+namespace Mapbox.Unity.Map
 {
 	using UnityEngine;
 	using Mapbox.Map;
@@ -33,6 +34,17 @@
 		UnwrappedTileId _cachedTile;
 		UnwrappedTileId _currentTile;
 
+		float _distance;
+
+		float _distance2;
+
+		[SerializeField]
+
+		float _d;
+
+
+
+
 
 
 		internal override void OnInitialized()
@@ -42,6 +54,34 @@
 			_ne = Vector2.one;
 			Build();
 			//_shouldUpdate = true;
+		}
+
+		void Update()
+		{
+			_ray = _camera.ViewportPointToRay(_sw);
+			if (_groundPlane.Raycast(_ray, out _hitDistance))
+			{
+				var p1 = _ray.GetPoint(_hitDistance);
+				p1.y = 0;
+				_ray = _camera.ViewportPointToRay(_ne);
+				if (_groundPlane.Raycast(_ray, out _hitDistance))
+				{
+
+					var p2 = _ray.GetPoint(_hitDistance);
+					p2.y = 0;
+					_distance2 = (p1 - p2).magnitude;
+				}
+			}
+
+			_d = _distance2 / _distance;
+			if (_d < .9f)
+			{
+				_map.Zoom++;
+			}
+			else if (_d > 1.1f)
+			{
+				_map.Zoom--;
+			}
 		}
 
 		void Build()
@@ -66,21 +106,22 @@
 				if (_groundPlane.Raycast(_ray, out _hitDistance))
 				{
 					latLonSW = _ray.GetPoint(_hitDistance).GetGeoPosition(_map.CenterMercator, _map.WorldRelativeScale);
-					Debug.Log("TileCoverTileProvider: " + latLonSW);
+					//Debug.Log("TileCoverTileProvider: " + latLonSW);
 					_ray = _camera.ViewportPointToRay(_ne);
 					Vector2d latLonNE;
 					if (_groundPlane.Raycast(_ray, out _hitDistance))
 					{
 
 						latLonNE = _ray.GetPoint(_hitDistance).GetGeoPosition(_map.CenterMercator, _map.WorldRelativeScale);
-						Debug.Log("TileCoverTileProvider: " + latLonNE);
+						//Debug.Log("TileCoverTileProvider: " + latLonNE);
 						var cover = TileCover.Get(new Vector2dBounds(latLonSW, latLonNE), _map.Zoom);
 						foreach (var tile in cover)
 						{
 							AddTile(new UnwrappedTileId(tile.Z, tile.X, tile.Y));
 						}
+						_distance = (float)(Conversions.LatLonToMeters(latLonNE) - Conversions.LatLonToMeters(latLonSW)).magnitude;
+						Debug.Log("TileCoverTileProvider: 1 " + _distance);
 					}
-
 				}
 
 

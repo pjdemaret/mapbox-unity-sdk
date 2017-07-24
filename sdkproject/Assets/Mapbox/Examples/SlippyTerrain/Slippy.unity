@@ -211,7 +211,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 3000
+  far clip plane: 11000
   field of view: 33
   orthographic: 0
   orthographic size: 5
@@ -235,7 +235,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1281281112}
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 300, z: 0}
+  m_LocalPosition: {x: 0, y: 3000, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
   m_Children: []
@@ -531,7 +531,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1461465688}
   - 114: {fileID: 1461465687}
-  - 114: {fileID: 1461465690}
+  - 114: {fileID: 1461465689}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -553,9 +553,10 @@ MonoBehaviour:
   _latitudeLongitudeString: 36.058781, -112.109295
   _zoom: 11
   _root: {fileID: 0}
-  _tileProvider: {fileID: 1461465690}
+  _tileProvider: {fileID: 1461465689}
   _mapVisualizer: {fileID: 11400000, guid: 78d4f9b7fc8ac45c487ad9ea051422e6, type: 2}
   _unityTileSize: 100
+  _snapMapHeightToZero: 1
 --- !u!4 &1461465688
 Transform:
   m_ObjectHideFlags: 0
@@ -569,7 +570,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
---- !u!114 &1461465690
+--- !u!114 &1461465689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -577,10 +578,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1461465686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae9a62a6a8194f49bab9128c9acffb7, type: 3}
+  m_Script: {fileID: 11500000, guid: a0f9c14173149432da39afde692b6292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 1281281116}
-  _visibleBuffer: 2
-  _disposeBuffer: 6
-  _updateInterval: 0.33
+  _visibleBuffer: 0
+  _disposeBuffer: 0
+  _updateInterval: 0

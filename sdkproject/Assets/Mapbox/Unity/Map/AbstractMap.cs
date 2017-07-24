@@ -15,7 +15,7 @@
 		string _latitudeLongitudeString;
 
 		[SerializeField]
-		[Range(0, 22)]
+		[Range(0, 18)]
 		int _zoom;
 		public int Zoom
 		{
@@ -25,7 +25,7 @@
 			}
 			set
 			{
-				_zoom = value;
+				_zoom = Mathf.Clamp(value, 0, 18);
 			}
 		}
 
@@ -119,6 +119,7 @@
 
 			var referenceTileRect = Conversions.TileBounds(TileCover.CoordinateToTileId(_mapCenterLatitudeLongitude, _zoom));
 			_mapCenterMercator = referenceTileRect.Center;
+			_root.localPosition = -Conversions.GeoToWorldPosition(_mapCenterLatitudeLongitude.x, _mapCenterLatitudeLongitude.y, _mapCenterMercator, _worldRelativeScale).ToVector3xz();
 
 			//_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
 			//Root.localScale = Vector3.one * _worldRelativeScale;
@@ -137,12 +138,17 @@
 				var referenceTileRect = Conversions.TileBounds(TileCover.CoordinateToTileId(_mapCenterLatitudeLongitude, _zoom));
 				//_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
 				_mapCenterMercator = referenceTileRect.Center;
+				var position = -Conversions.GeoToWorldPosition(_mapCenterLatitudeLongitude.x, _mapCenterLatitudeLongitude.y, _mapCenterMercator, _worldRelativeScale).ToVector3xz();
+				position.y = _root.localPosition.y;
+				_root.localPosition = position;
+
 				//_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
 				//Root.localScale = Vector3.one* _worldRelativeScale;
 				//_mapVisualizer.Clear();
 				_tileProvider.Clear();
 				_tileProvider.Initialize(this);
 				_lastZoom = _zoom;
+				//_worldHeightFixed = false;
 			}
 		}
 
