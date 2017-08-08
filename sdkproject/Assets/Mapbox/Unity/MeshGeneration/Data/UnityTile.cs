@@ -116,7 +116,9 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			_canonicalTileId = tileId.Canonical;
 			gameObject.name = _canonicalTileId.ToString();
 			var position = new Vector3((float)(_rect.Center.x - map.CenterMercator.x), 0, (float)(_rect.Center.y - map.CenterMercator.y));
-			transform.localPosition = position;
+            //Debug.Log("CenterMercator : " + map.CenterMercator);
+            //Debug.Log("RelativeScale : " + map.WorldRelativeScale);
+            transform.localPosition = position;
 			gameObject.SetActive(true);
 		}
 
@@ -134,9 +136,10 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			OnHeightDataChanged = delegate { };
 			OnRasterDataChanged = delegate { };
 			OnVectorDataChanged = delegate { };
-
+            
 			Cancel();
-			_tiles.Clear();
+            //CleanTile();
+            _tiles.Clear();
 
 			// HACK: this is for vector layer features and such.
 			// It's slow and wasteful, but a better solution will be difficult.
@@ -235,5 +238,11 @@ namespace Mapbox.Unity.MeshGeneration.Data
 				_tiles[i].Cancel();
 			}
 		}
+
+        internal void CleanTile()
+        {
+            //Destroy(MeshFilter);
+            _meshFilter = null;
+        }
 	}
 }

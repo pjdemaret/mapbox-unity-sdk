@@ -26,6 +26,7 @@
 			set
 			{
 				_zoom = value;
+                UpdateMapProperties();
 			}
 		}
 
@@ -128,6 +129,15 @@
 
 			OnInitialized();
 		}
+
+        public void UpdateMapProperties()
+        {
+            var referenceTileRect = Conversions.TileBounds(TileCover.CoordinateToTileId(_mapCenterLatitudeLongitude, _zoom));
+            _mapCenterMercator = referenceTileRect.Center;
+
+            _worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
+            Root.localScale = Vector3.one * _worldRelativeScale;
+        }
 
 		void TileProvider_OnTileAdded(UnwrappedTileId tileId)
 		{

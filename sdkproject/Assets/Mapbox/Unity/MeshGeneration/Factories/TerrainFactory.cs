@@ -101,11 +101,10 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 
 			if (tile.MeshFilter == null)
 			{
-				tile.gameObject.AddComponent<MeshFilter>();
-				CreateBaseMesh(tile);
+				tile.gameObject.AddComponent<MeshFilter>();				
 			}
-
-			if (_addCollider && tile.Collider == null)
+            CreateBaseMesh(tile);
+            if (_addCollider && tile.Collider == null)
 			{
 				tile.gameObject.AddComponent<MeshCollider>();
 			}
