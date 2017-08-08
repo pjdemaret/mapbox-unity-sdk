@@ -138,7 +138,6 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			OnVectorDataChanged = delegate { };
             
 			Cancel();
-            //CleanTile();
             _tiles.Clear();
 
 			// HACK: this is for vector layer features and such.
@@ -238,11 +237,5 @@ namespace Mapbox.Unity.MeshGeneration.Data
 				_tiles[i].Cancel();
 			}
 		}
-
-        internal void CleanTile()
-        {
-            //Destroy(MeshFilter);
-            _meshFilter = null;
-        }
 	}
 }

@@ -25,12 +25,12 @@
         float _zoomSpeed = 10.0f;
 
         Plane _groundPlane;
-        Ray _rayTopLeft;
-        Ray _rayBottomRight;
-        float _hitDistanceTopLeft;
-        float _hitDistanceBottomRight;
-        Vector3 _viewportTopLeft;
-        Vector3 _viewportBottomRight;
+        Ray _rayNE;
+        Ray _raySW;
+        float _hitDistanceNE;
+        float _hitDistanceSW;
+        Vector3 _viewportSW;
+        Vector3 _viewportNE;
         float _elapsedTime;
         bool _shouldUpdate;
         int _previousZoomLevel; 
@@ -38,17 +38,36 @@
         HashSet<UnwrappedTileId> _cachedTiles;
         HashSet<UnwrappedTileId> _currentTiles;
 
+        float _zoomSwitchDistance = 10.0f;
+
 
 
         internal override void OnInitialized()
         {
             _groundPlane = new Plane(Vector3.up, Mapbox.Unity.Constants.Math.Vector3Zero);
-            _viewportTopLeft = new Vector3(0.0f, 1.0f, 0);
-            _viewportBottomRight = new Vector3(1.0f, 0.0f, 0);
+            _viewportSW = new Vector3(0.0f, 0.0f, 0);
+            _viewportNE = new Vector3(1.0f, 1.0f, 0);
             _shouldUpdate = true;
             _currentTiles = new HashSet<UnwrappedTileId>();
             _cachedTiles = new HashSet<UnwrappedTileId>();
             _previousZoomLevel = _map.Zoom;
+
+            var currentPosition = _camera.transform.position;
+            _zoomSwitchDistance = (currentPosition.y - 10.0f /*buffer - so we don't landup inside the ground*/) / (22.0f - _map.Zoom);
+            
+        }
+
+        public static float MapScaleToZoomLevel(float mapScale, float latitude, float ppi)
+        {
+            const float MetersPerInch = 2.54f / 100;
+
+            const double EarthRadius = 6371000.00;
+            const double EarthCircumference = EarthRadius * System.Math.PI * 2;
+            double realLengthInMeters = EarthCircumference * System.Math.Cos(latitude* System.Math.PI /180.0);
+
+            double zoomLevelExp = (realLengthInMeters * ppi) / (256 * MetersPerInch * mapScale);
+
+            return (float)System.Math.Log(zoomLevelExp, 2);
         }
 
         void Update()
@@ -63,22 +82,26 @@
             {
                 _elapsedTime = 0f;
 
-                if(_previousZoomLevel != _map.Zoom)
+                if (_previousZoomLevel != _map.Zoom)
                 {
                     var currentPosition = _camera.transform.position;
-                    currentPosition.y += (_previousZoomLevel - _map.Zoom) * _zoomSpeed;
+                    currentPosition.y += (_previousZoomLevel - _map.Zoom) * _zoomSpeed * _zoomSwitchDistance;
                     _camera.transform.position = currentPosition;
                     _previousZoomLevel = _map.Zoom;
                 }
-                _rayTopLeft = _camera.ViewportPointToRay(_viewportTopLeft);
-                _rayBottomRight = _camera.ViewportPointToRay(_viewportBottomRight);
-                if (_groundPlane.Raycast(_rayTopLeft, out _hitDistanceTopLeft) && _groundPlane.Raycast(_rayBottomRight, out _hitDistanceBottomRight))
+                _rayNE = _camera.ViewportPointToRay(_viewportNE);
+                _raySW = _camera.ViewportPointToRay(_viewportSW);
+                if (_groundPlane.Raycast(_rayNE, out _hitDistanceNE) && _groundPlane.Raycast(_raySW, out _hitDistanceSW))
                 {
-                    _currentLatitudeLongitude = _rayTopLeft.GetPoint(_hitDistanceTopLeft).GetGeoPosition(_map.CenterMercator, _map.WorldRelativeScale);                  
-                    var startTile = TileCover.CoordinateToTileId(_currentLatitudeLongitude, _map.Zoom);
+                    var northEast = _rayNE.GetPoint(_hitDistanceNE).GetGeoPosition(_map.CenterMercator, _map.WorldRelativeScale);                  
+                    //var startTile = TileCover.CoordinateToTileId(northEast, _map.Zoom);
                 
-                    _currentLatitudeLongitude = _rayBottomRight.GetPoint(_hitDistanceBottomRight).GetGeoPosition(_map.CenterMercator, _map.WorldRelativeScale);
-                    var endTile = TileCover.CoordinateToTileId(_currentLatitudeLongitude, _map.Zoom);
+                    var southWest = _raySW.GetPoint(_hitDistanceSW).GetGeoPosition(_map.CenterMercator, _map.WorldRelativeScale);
+                    //var endTile = TileCover.CoordinateToTileId(southWest, _map.Zoom);
+
+                    Vector2dBounds tileBounds = new Vector2dBounds(southWest, northEast);
+
+                    var tilesToRequest = TileCover.Get(tileBounds, _map.Zoom);
 
                     _cachedTiles.Clear();
                     foreach(var tile in _currentTiles)
@@ -86,26 +109,22 @@
                         _cachedTiles.Add(tile);                   
                     }
                     _currentTiles.Clear();
-                    for (int x = System.Math.Max(startTile.X,0); x <= endTile.X; x++)
-                    {
-                        for (int y = System.Math.Max(startTile.Y,0) ; y <= endTile.Y; y++)
+
+                    foreach(var tileRequest in tilesToRequest)
+                    {                       
+                        var _currentTile = new UnwrappedTileId(tileRequest.Z,tileRequest.X, tileRequest.Y);
+                        if (!_cachedTiles.Contains(_currentTile))
                         {
-                            var _currentTile = new UnwrappedTileId(_map.Zoom, x, y);
-                            if(!_cachedTiles.Contains(_currentTile))
-                            {
-                                AddTile(_currentTile);
-                                _currentTiles.Add(_currentTile);                               
-                            }
-                            else
-                            {
-                                //this tile was cached, so don't destroy it. 
-                                _currentTiles.Add(_currentTile);
-                                _cachedTiles.Remove(_currentTile);
-                            }
-                            
+                            AddTile(_currentTile);
+                            _currentTiles.Add(_currentTile);
+                        }
+                        else
+                        {
+                            //this tile was cached, so don't destroy it. 
+                            _currentTiles.Add(_currentTile);
+                            _cachedTiles.Remove(_currentTile);
                         }
                     }
-
                     Cleanup(_cachedTiles);
                 }
             }
