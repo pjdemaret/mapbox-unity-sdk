@@ -15,7 +15,7 @@ MonoBehaviour:
   _textureTop: 1
   _useSatelliteTexture: 1
   _topMaterials:
-  - {fileID: 2100000, guid: 5cc6a7dc3df7cc84693bdde07669ab5b, type: 2}
+  - {fileID: 2100000, guid: 7184bf367f42c554680157a37c6d64b9, type: 2}
   _textureSides: 1
   _sideMaterials:
-  - {fileID: 2100000, guid: 5cc6a7dc3df7cc84693bdde07669ab5b, type: 2}
+  - {fileID: 2100000, guid: 7184bf367f42c554680157a37c6d64b9, type: 2}
