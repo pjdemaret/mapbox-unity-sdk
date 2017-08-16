@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac8ce85db9411544b60fe6b9f1ad0a7, type: 3}
+  m_Name: New Line Distribution Modifier
+  m_EditorClassIdentifier: 
+  Active: 1
+  _type: 2
+  _intervalDistance: 3
+  _placeAtStart: 1
+  _placeAtEnd: 1
+  _pointCount: 2
+  _minDistance: 1
+  _maxDistance: 11
+  _centralizePoints: 1
+  _prefab: {fileID: 0}
