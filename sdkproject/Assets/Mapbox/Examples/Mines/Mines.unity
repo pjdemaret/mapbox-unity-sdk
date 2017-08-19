@@ -170,10 +170,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 507405400}
-  m_LocalRotation: {x: 0.10210904, y: -0, z: -0, w: 0.9947732}
-  m_LocalPosition: {x: 0, y: 401.4, z: -697.3}
+  m_LocalRotation: {x: 0.5456683, y: -0, z: -0, w: 0.8380013}
+  m_LocalPosition: {x: 0, y: 303, z: -152}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 11.665001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 66.12, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _latitudeLongitudeString: 37.7648, -122.463
-  _zoom: 18
+  _zoom: 16
   _root: {fileID: 943927685}
   _tileProvider: {fileID: 943927686}
   _mapVisualizer: {fileID: 11400000, guid: c35bd7281371c374a8a78f4e7d02bfdd, type: 2}
@@ -266,7 +266,7 @@ Light:
   serializedVersion: 7
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.8
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10

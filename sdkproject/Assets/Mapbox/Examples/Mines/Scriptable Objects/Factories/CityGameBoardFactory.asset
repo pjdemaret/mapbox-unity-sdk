@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094f1ba8018db7a4c988cfa5b7932001, type: 3}
+  m_Name: CityGameBoardFactory
+  m_EditorClassIdentifier: 
+  _mapId: mapbox.mapbox-streets-v7
+  PoiPrefab: {fileID: 1000011051810728, guid: 9a175ed54036b484e8e99ee768dcc1af, type: 2}
+  Visualizers:
+  - {fileID: 11400000, guid: 8601936fd7e47514a8b2e73e6b8b8934, type: 2}
+  - {fileID: 11400000, guid: 02d328af22479b84aa5a72899c0b3e3c, type: 2}
