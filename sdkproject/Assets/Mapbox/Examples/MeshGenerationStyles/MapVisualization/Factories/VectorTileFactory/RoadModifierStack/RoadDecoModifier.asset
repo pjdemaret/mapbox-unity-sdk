@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4d785bff3174d0aa13da65dc455a4b, type: 3}
+  m_Name: RoadDecoModifier
+  m_EditorClassIdentifier: 
+  Active: 1
+  _prefab: {fileID: 1000010659078656, guid: 031f1f201bbba400eab296024929dff9, type: 2}
+  _type: 0
+  _distanceBetweenObject: 5
+  _translateY: 2
+  _scaleFactor: 1
