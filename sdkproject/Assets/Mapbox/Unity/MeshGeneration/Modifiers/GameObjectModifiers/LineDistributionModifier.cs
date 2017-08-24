@@ -4,6 +4,8 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 	using Mapbox.Unity.MeshGeneration.Components;
 	using Mapbox.Unity.MeshGeneration.Interfaces;
 	using System;
+	using System.Collections.Generic;
+	using Mapbox.Unity.MeshGeneration.Data;
 
 	public enum LineDistributionType
 	{
@@ -45,13 +47,23 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 		[SerializeField]
 		private GameObject _prefab;
 
+		[SerializeField]
+		private List<PlacerBase> _placers;
+
 
 		private float dist, stepDistance;
 		private int count;
 		private Vector3 dif, dir, startPoint;
-
+		[NonSerialized]
+		private List<Vector3> _positions;
+		[NonSerialized]
+		private List<Quaternion> _rotations;
+		
 		public override void Run(FeatureBehaviour fb)
 		{
+			_positions = new List<Vector3>();
+			_rotations = new List<Quaternion>();
+
 			_parent = fb.transform;
 			if (_prefab == null)
 				_prefab = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -76,6 +88,15 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 					}
 				}
 			}
+
+			for (int i = 0; i < _positions.Count; i++)
+			{
+				var go = Instantiate(_prefab);
+				go.name = name;
+				go.transform.SetParent(_parent, false);
+				go.transform.localPosition = _positions[i] + Vector3.up * 1.5f;
+				go.transform.rotation = _rotations[i];
+			}
 		}
 
 		private void RandomDistribution(FeatureBehaviour fb, Vector3 f, Vector3 s)
@@ -86,18 +107,18 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 
 			startPoint = f;
 			if (_placeAtStart)
-				CreateObject(startPoint, "start");
+				CreateObject(startPoint, dir, fb.Data);
 
 			var delta = 0f;
 			delta += UnityEngine.Random.Range(_minDistance, _maxDistance);
 			while (delta < dist)
 			{
-				CreateObject(startPoint + dir * delta);
+				CreateObject(startPoint + dir * delta, dir, fb.Data);
 				delta += UnityEngine.Random.Range(_minDistance, _maxDistance);
 			} 
 
 			if (_placeAtEnd)
-				CreateObject(s, "end");
+				CreateObject(s, dir, fb.Data);
 		}
 
 		private void FixedCount(FeatureBehaviour fb, Vector3 f, Vector3 s)
@@ -110,57 +131,56 @@ namespace Mapbox.Unity.MeshGeneration.Modifiers
 			startPoint = f;
 
 			if (_placeAtStart)
-				CreateObject(startPoint, "start");
+				CreateObject(startPoint, dir, fb.Data);
 
 			if (_centralizePoints)
 			{
 				startPoint += dir * (dist - (_pointCount * stepDistance)) / 2;
-				CreateObject(startPoint);
+				CreateObject(startPoint, dir, fb.Data);
 			}
 
 			for (int i = 1; i <= _pointCount; i++)
 			{
-				CreateObject(startPoint + dir * stepDistance * i);
+				CreateObject(startPoint + dir * stepDistance * i, dir, fb.Data);
 			}
 
 			if (_placeAtEnd)
-				CreateObject(s, "end");
+				CreateObject(s, dir, fb.Data);
 		}
-
-
+		
 		private void FixedInterval(FeatureBehaviour fb, Vector3 f, Vector3 s)
 		{
 			dif = (s - f);
 			dist = dif.magnitude;
 			dir = dif.normalized;
-			count = (int)(dist / _intervalDistance);
+			count = (int)((dist-10) / _intervalDistance);
 
 			startPoint = f;
 
 			if (_placeAtStart)
-				CreateObject(startPoint, "start");
+				CreateObject(startPoint, dir, fb.Data);
 
 			if (_centralizePoints)
 			{
 				startPoint += dir * (dist - (count * _intervalDistance)) / 2;
-				CreateObject(startPoint);
+				CreateObject(startPoint, dir, fb.Data);
 			}
 
 			for (int i = 1; i <= count; i++)
 			{
-				CreateObject(startPoint + dir * _intervalDistance * i);
+				CreateObject(startPoint + dir * _intervalDistance * i, dir, fb.Data);
 			}
 
 			if (_placeAtEnd)
-				CreateObject(s, "end");
+				CreateObject(s, dir, fb.Data);
 		}
 
-		private void CreateObject(Vector3 position, string name = "step")
+		private void CreateObject(Vector3 position, Vector3 dir, VectorFeatureUnity feature)
 		{
-			var go = Instantiate(_prefab);
-			go.name = name;
-			go.transform.SetParent(_parent, false);
-			go.transform.localPosition = position + Vector3.up * 1.5f;
+			foreach (var placer in _placers)
+			{
+				placer.Run(_positions, _rotations, feature, position, dir);
+			}			
 		}
 	}
 }

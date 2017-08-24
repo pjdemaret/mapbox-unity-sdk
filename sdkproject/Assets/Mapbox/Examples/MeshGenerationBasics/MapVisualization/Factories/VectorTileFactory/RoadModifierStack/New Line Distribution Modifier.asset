@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Name: New Line Distribution Modifier
   m_EditorClassIdentifier: 
   Active: 1
-  _type: 2
-  _intervalDistance: 3
-  _placeAtStart: 1
-  _placeAtEnd: 1
+  _type: 0
+  _intervalDistance: 5
+  _placeAtStart: 0
+  _placeAtEnd: 0
   _pointCount: 2
   _minDistance: 1
   _maxDistance: 11
   _centralizePoints: 1
   _prefab: {fileID: 0}
+  _placers:
+  - {fileID: 11400000, guid: 680f72d9e697aa14590ff6c2142fd7ef, type: 2}
+  - {fileID: 11400000, guid: c3657502c7189b64aa08c9fb5f309471, type: 2}
