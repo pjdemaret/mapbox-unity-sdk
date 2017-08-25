@@ -37,9 +37,8 @@
 		{
 			base.Start();
 
-			Debug.LogFormat("{0}", CenterLatitudeLongitude);
 			_centerWebMerc = Conversions.GeoToWorldPosition(CenterLatitudeLongitude, new Vector2d(0, 0));
-			Debug.LogFormat("{0}", _centerWebMerc);
+			Debug.LogFormat("center, latLng:{0} webMerc:{1}", CenterLatitudeLongitude, _centerWebMerc);
 
 			if (null == _cameraMovement) { Debug.LogErrorFormat("{0}: camera movement not set", this.GetType().Name); }
 			_referenceCamera = _cameraMovement._referenceCamera;

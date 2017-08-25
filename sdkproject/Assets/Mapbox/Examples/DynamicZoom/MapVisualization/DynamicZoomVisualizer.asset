@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: DynamicZoomVisualizer
   m_EditorClassIdentifier: 
   _factories:
-  - {fileID: 11400000, guid: 920edb1633b66b348b4eaa705b6a5677, type: 2}
+  - {fileID: 11400000, guid: 376dcb910939b2044a1158818520481c, type: 2}

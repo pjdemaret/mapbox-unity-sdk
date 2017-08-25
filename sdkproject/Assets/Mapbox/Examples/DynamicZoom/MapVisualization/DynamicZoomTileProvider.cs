@@ -28,9 +28,12 @@
 
 		private Plane _groundPlane;
 		private DynamicZoomMap _dynamicZoomMap;
+		private string _className;
 
 		internal override void OnInitialized()
 		{
+			_className = this.GetType().Name;
+
 			//ground plane for raycasting
 			_groundPlane = new Plane(Vector3.up, 0);
 			_dynamicZoomMap = _map as DynamicZoomMap;
@@ -81,7 +84,7 @@
 			if (cameraY < _cameraZoomingRangeMinY)
 			{
 				//already at highest level, don't do anything -> camera free to move closer
-				if (_dynamicZoomMap.Zoom ==_dynamicZoomMap.MaxZoom) { return; }
+				if (_dynamicZoomMap.Zoom == _dynamicZoomMap.MaxZoom) { return; }
 				_dynamicZoomMap.Zoom++;
 				//reposition camera at max distance
 				localPosition.y = _cameraZoomingRangeMaxY;
@@ -106,7 +109,8 @@
 			//update viewport in case it was changed by switching zoom level
 			_viewPortWebMercBounds = getcurrentViewPortWebMerc();
 
-			var tilesNeeded= TileCover.GetWithWebMerc(_viewPortWebMercBounds, _dynamicZoomMap.Zoom);
+			var tilesNeeded = TileCover.GetWithWebMerc(_viewPortWebMercBounds, _dynamicZoomMap.Zoom);
+			Debug.LogFormat("{0}.{1}: adding tiles", _className, new System.Diagnostics.StackFrame().GetMethod().Name);
 			foreach (var tile in tilesNeeded)
 			{
 				AddTile(tile);
