@@ -141,7 +141,7 @@ MonoBehaviour:
   _zoom: 0
   _root: {fileID: 0}
   _tileProvider: {fileID: 161680364}
-  _mapVisualizer: {fileID: 11400000, guid: c5c72886d2e9404439c5411592dbdc8f, type: 2}
+  _mapVisualizer: {fileID: 11400000, guid: eb25b55fe6bff9148883822776a932f0, type: 2}
   _unityTileSize: 100
   _snapMapHeightToZero: 1
   MinZoom: 0
