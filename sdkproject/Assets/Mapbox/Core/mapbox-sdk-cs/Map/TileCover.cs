@@ -9,6 +9,7 @@ namespace Mapbox.Map
 	using System;
 	using System.Collections.Generic;
 	using Mapbox.Utils;
+	using UnityEngine;
 
 	/// <summary>
 	///     Helper funtions to get a tile cover, i.e. a set of tiles needed for
@@ -94,6 +95,7 @@ namespace Mapbox.Map
 			{
 				for (int y = neTile.Y; y <= swTile.Y; y++)
 				{
+					Debug.LogFormat("TileCover.GetWithWebMerc: {0}/{1}/{2}", zoom, x, y);
 					tiles.Add(new UnwrappedTileId(zoom, x, y));
 				}
 			}

@@ -7,6 +7,7 @@
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
+	using System.Linq;
 	using UnityEngine;
 
 
@@ -110,7 +111,9 @@
 			_viewPortWebMercBounds = getcurrentViewPortWebMerc();
 
 			var tilesNeeded = TileCover.GetWithWebMerc(_viewPortWebMercBounds, _dynamicZoomMap.Zoom);
-			Debug.LogFormat("{0}.{1}: adding tiles", _className, new System.Diagnostics.StackFrame().GetMethod().Name);
+			string msg = string.Format("{0}.{1}: adding {2} tiles", _className, new System.Diagnostics.StackFrame().GetMethod().Name, tilesNeeded.Count)+Environment.NewLine;
+			msg += string.Join(Environment.NewLine, tilesNeeded.Select(t => t.Canonical.ToString()).ToArray());
+			Debug.LogFormat(msg);
 			foreach (var tile in tilesNeeded)
 			{
 				AddTile(tile);

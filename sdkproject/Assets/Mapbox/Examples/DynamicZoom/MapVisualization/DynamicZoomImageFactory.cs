@@ -31,6 +31,7 @@ namespace Mapbox.Unity.Examples.DynamicZoom
 
 		internal override void OnRegistered(UnityTile tile)
 		{
+			Debug.LogFormat("{0}.{1} tile:{2}", _className, new System.Diagnostics.StackFrame().GetMethod().Name, tile.CanonicalTileId);
 			if (null == tile.MeshRenderer) { tile.gameObject.AddComponent<MeshRenderer>(); }
 
 			tile.RasterDataState = TilePropertyState.Loading;
