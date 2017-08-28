@@ -111,9 +111,13 @@
 			_viewPortWebMercBounds = getcurrentViewPortWebMerc();
 
 			var tilesNeeded = TileCover.GetWithWebMerc(_viewPortWebMercBounds, _dynamicZoomMap.Zoom);
-			string msg = string.Format("{0}.{1}: adding {2} tiles", _className, new System.Diagnostics.StackFrame().GetMethod().Name, tilesNeeded.Count)+Environment.NewLine;
+			string msg = string.Format("{0}.{1}: adding {2} tiles", _className, new System.Diagnostics.StackFrame().GetMethod().Name, tilesNeeded.Count) + Environment.NewLine;
 			msg += string.Join(Environment.NewLine, tilesNeeded.Select(t => t.Canonical.ToString()).ToArray());
 			Debug.LogFormat(msg);
+
+			List<UnwrappedTileId> toRemove = _activeTiles.Except(tilesNeeded).ToList();
+			foreach (var t2r in toRemove) { RemoveTile(t2r); }
+
 			foreach (var tile in tilesNeeded)
 			{
 				AddTile(tile);

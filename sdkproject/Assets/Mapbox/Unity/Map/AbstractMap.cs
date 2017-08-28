@@ -120,8 +120,8 @@
 			var referenceTileRect = Conversions.TileBounds(TileCover.CoordinateToTileId(_mapCenterLatitudeLongitude, _zoom));
 			_mapCenterMercator = referenceTileRect.Center;
 
-			_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
-			//_worldRelativeScale = 1;
+			//_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
+			_worldRelativeScale = 1;
 			Root.localScale = Vector3.one * _worldRelativeScale;
 
 			_mapVisualizer.Initialize(this, _fileSouce);

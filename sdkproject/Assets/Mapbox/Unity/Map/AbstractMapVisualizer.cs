@@ -10,10 +10,12 @@
 	using Mapbox.Unity.Map;
 	using Mapbox.Platform;
 
-	public /*abstract*/ class AbstractMapVisualizer : ScriptableObject, IMapVisualizer
+	public abstract class AbstractMapVisualizer : ScriptableObject, IMapVisualizer
 	{
+		public AbstractTileFactory[] _factories { get { return unityfactories; } set { unityfactories = value; } }
+
 		[SerializeField]
-		public AbstractTileFactory[] _factories { get; set; }
+		public AbstractTileFactory[] unityfactories;
 
 		public IMap _map { get; internal set; }
 
@@ -97,7 +99,7 @@
 		/// Registers requested tiles to the factories
 		/// </summary>
 		/// <param name="tileId"></param>
-		public UnityTile LoadTile(UnwrappedTileId tileId)
+		public virtual UnityTile LoadTile(UnwrappedTileId tileId)
 		{
 			UnityTile unityTile = null;
 

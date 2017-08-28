@@ -213,6 +213,26 @@ namespace Mapbox.Unity.Utilities
 			return new Vector2d((float)center.x, (float)center.y);
 		}
 
+
+		/// <summary>
+		/// Gets the Web Mercator x/y of the center of a tile.
+		/// </summary>
+		/// <param name="x"> Tile X position. </param>
+		/// <param name="y"> Tile Y position. </param>
+		/// <param name="zoom"> Zoom level. </param>
+		/// <returns>A <see cref="T:UnityEngine.Vector2d"/> of lat/lon coordinates.</returns>
+		public static Vector2d TileIdToCenterWebMercator(int x, int y, int zoom)
+		{
+			double tileCnt = Math.Pow(2, zoom);
+			double centerX = x + 0.5;
+			double centerY = y + 0.5;
+
+			centerX = ((centerX / tileCnt * 2) - 1) * Constants.WebMercMax;
+			centerY = (1 - (centerY / tileCnt * 2)) * Constants.WebMercMax;
+			return new Vector2d(centerX, centerY);
+		}
+
+
 		/// <summary>
 		/// Gets the meters per pixels at given latitude and zoom level for a 256x256 tile.
 		/// See: http://wiki.openstreetmap.org/wiki/Zoom_levels.
