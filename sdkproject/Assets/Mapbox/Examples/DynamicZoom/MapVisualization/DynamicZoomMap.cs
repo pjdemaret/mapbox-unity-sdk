@@ -12,6 +12,7 @@
 	public class DynamicZoomMap : AbstractMap
 	{
 
+
 		[SerializeField]
 		[Range(0, 22)]
 		public int MinZoom;

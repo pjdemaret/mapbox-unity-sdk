@@ -8,8 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 526c8a90df31d41fe8057a6f85c7a3e4, type: 3}
-  m_Name: DynamicZoomVisualizer
+  m_Script: {fileID: 11500000, guid: 16785e6c00994f34a9e294579b5ee133, type: 3}
+  m_Name: DynamicZoomMapVisualizer
   m_EditorClassIdentifier: 
-  _factories:
-  - {fileID: 11400000, guid: 376dcb910939b2044a1158818520481c, type: 2}

@@ -1,4 +1,4 @@
-namespace Mapbox.Unity.MeshGeneration
+﻿namespace Mapbox.Unity.Examples.DynamicZoom
 {
 	using Mapbox.Map;
 	using System.Collections.Generic;
@@ -8,16 +8,10 @@ namespace Mapbox.Unity.MeshGeneration
 	using Mapbox.Platform;
 	using Mapbox.Unity.Map;
 	using System;
+	using Mapbox.Unity.MeshGeneration;
 
-	public enum ModuleState
-	{
-		Initialized,
-		Working,
-		Finished
-	}
-
-	[CreateAssetMenu(menuName = "Mapbox/MapVisualizer")]
-	public class MapVisualizer : AbstractMapVisualizer
+	[CreateAssetMenu(menuName = "Mapbox/DynamicZoomMapVisualizer")]
+	public class DynamicZoomMapVisualizer : AbstractMapVisualizer
 	{
 
 

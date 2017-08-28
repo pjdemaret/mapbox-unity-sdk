@@ -134,18 +134,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 161680361}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e617acc113df264cb90a506e49d5730, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c3dbbfecec45964f8a86d5d46a6f78c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _latitudeLongitudeString: 47.06667, 15.43333
-  _zoom: 1
-  _root: {fileID: 0}
+  _latitudeLongitudeString: 0,0
+  _zoom: 0
+  _root: {fileID: 161680363}
   _tileProvider: {fileID: 161680364}
-  _mapVisualizer: {fileID: 11400000, guid: eb25b55fe6bff9148883822776a932f0, type: 2}
+  _mapVisualizer: {fileID: 11400000, guid: 354ea0d7fc3cb0c4c8e232ec16113f04, type: 2}
   _unityTileSize: 100
   _snapMapHeightToZero: 1
   MinZoom: 0
-  MaxZoom: 22
+  MaxZoom: 0
   _cameraMovement: {fileID: 161680365}
 --- !u!4 &161680363
 Transform:
@@ -154,7 +154,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 161680361}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33.730145, y: 31.81289, z: 45.281197}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 161680361}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 398281a6a241236478dd3aff20337a2f, type: 3}
+  m_Script: {fileID: 11500000, guid: fa7039a6da25d0141941544410b2f072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _referenceCamera: {fileID: 524273897}
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 161680361}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba5fba0f8e8c0674c87244510bd20ab1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9793390bbb409c94f8cbf60c492a8c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _zoomSpeed: 50

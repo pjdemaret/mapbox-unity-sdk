@@ -43,7 +43,7 @@
 		internal AbstractTileProvider _tileProvider;
 
 		[SerializeField]
-		MapVisualizer _mapVisualizer;
+		AbstractMapVisualizer _mapVisualizer;
 
 		[SerializeField]
 		internal float _unityTileSize = 100;
@@ -121,6 +121,7 @@
 			_mapCenterMercator = referenceTileRect.Center;
 
 			_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
+			//_worldRelativeScale = 1;
 			Root.localScale = Vector3.one * _worldRelativeScale;
 
 			_mapVisualizer.Initialize(this, _fileSouce);
