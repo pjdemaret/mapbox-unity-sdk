@@ -142,7 +142,7 @@ MonoBehaviour:
   _root: {fileID: 161680363}
   _tileProvider: {fileID: 161680364}
   _mapVisualizer: {fileID: 11400000, guid: a8ff1149bc7f1814d8d453b7637f2896, type: 2}
-  _unityTileSize: 100
+  _unityTileSize: 1
   _snapMapHeightToZero: 1
   MinZoom: 0
   MaxZoom: 0

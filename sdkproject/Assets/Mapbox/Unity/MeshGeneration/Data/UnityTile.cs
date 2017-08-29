@@ -16,7 +16,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 		float[] _heightData;
 
-		float _relativeScale;
+		//float _relativeScale;
 
 		Texture2D _heightTexture;
 
@@ -110,7 +110,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 		internal void Initialize(IMap map, UnwrappedTileId tileId, Nullable<Vector3> pos = null, Nullable<Vector3> scale=null)
 		{
-			_relativeScale = 1 / Mathf.Cos(Mathf.Deg2Rad * (float)map.CenterLatitudeLongitude.x);
+			//_relativeScale = 1 / Mathf.Cos(Mathf.Deg2Rad * (float)map.CenterLatitudeLongitude.x);
 			_rect = Conversions.TileBounds(tileId);
 			_unwrappedTileId = tileId;
 			_canonicalTileId = tileId.Canonical;
@@ -180,7 +180,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 				_heightData = new float[256 * 256];
 			}
 
-			var relativeScale = useRelative ? _relativeScale : 1f;
+			var relativeScale = 1f;// useRelative ? _relativeScale : 1f;
 			for (int xx = 0; xx < 256; ++xx)
 			{
 				for (int yy = 0; yy < 256; ++yy)
