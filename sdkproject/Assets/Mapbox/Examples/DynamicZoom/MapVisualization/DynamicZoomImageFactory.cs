@@ -46,7 +46,7 @@ namespace Mapbox.Unity.Examples.DynamicZoom
 					return;
 				}
 
-				tile.SetRasterData(rasterTile.Data, false, true);
+				tile.SetRasterData(rasterTile.Data, false, false);
 				tile.RasterDataState = TilePropertyState.Loaded;
 			});
 		}

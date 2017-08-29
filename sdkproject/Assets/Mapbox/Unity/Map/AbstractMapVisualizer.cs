@@ -12,6 +12,7 @@
 
 	public abstract class AbstractMapVisualizer : ScriptableObject, IMapVisualizer
 	{
+		[HideInInspector]
 		public AbstractTileFactory[] _factories { get { return unityfactories; } set { unityfactories = value; } }
 
 		[SerializeField]
