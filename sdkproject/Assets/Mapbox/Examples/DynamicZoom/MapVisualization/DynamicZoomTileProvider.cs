@@ -86,7 +86,8 @@
 
 			//TODO: move active tiles on pan
 			//HACK: just deactivate all active tiles
-			if (_previousWebMercCenter != _dynamicZoomMap.CenterWebMerc)
+			//!!!BEWARE!!!: don't compare Vector2d via '==' use 'Equals()'
+			if (!_previousWebMercCenter.Equals(_dynamicZoomMap.CenterWebMerc))
 			{
 				Debug.Log("_previousWebMercCenter != _dynamicZoomMap.CenterWebMerc");
 				_previousWebMercCenter = _dynamicZoomMap.CenterWebMerc;
