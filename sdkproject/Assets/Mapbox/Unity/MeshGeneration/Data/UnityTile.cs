@@ -135,6 +135,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		{
 			// TODO: to hide potential visual artifacts, use placeholder mesh / texture?
 			// MeshRenderer.material.mainTexture = null;
+			MeshRenderer.enabled = false;
 
 			gameObject.SetActive(false);
 
@@ -226,6 +227,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 				_rasterData.Compress(false);
 			}
 
+			MeshRenderer.enabled = true;
 			RasterDataState = TilePropertyState.Loaded;
 			OnRasterDataChanged(this);
 		}
