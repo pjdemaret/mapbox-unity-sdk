@@ -20,6 +20,8 @@
 
 		/// <summary>previous Camera.Y</summary>
 		private float _previousY = float.MinValue;
+		/// <summary>previous Camera.Y</summary>
+		private Vector2d _previousWebMercCenter;
 		/// <summary>current viewport in WebMercator coordinates</summary>
 		private Vector2dBounds _viewPortWebMercBounds;
 		/// <summary>min of y range camera is allowed to move in</summary>
@@ -40,6 +42,8 @@
 			_dynamicZoomMap = _map as DynamicZoomMap;
 			if (null == _dynamicZoomMap) { Debug.LogErrorFormat("assigned tiled provider is not of type: {0}", this.GetType().Name); }
 
+
+			_previousWebMercCenter = _dynamicZoomMap.CenterWebMerc;
 
 			//set some defaults
 			_dynamicZoomMap.MaxZoom = _dynamicZoomMap.MaxZoom == 0 ? 10 : _dynamicZoomMap.MaxZoom;
@@ -80,6 +84,17 @@
 
 			_viewPortWebMercBounds = currentViewPortWebMercBnds;
 
+			//TODO: move active tiles on pan
+			//HACK: just deactivate all active tiles
+			if (_previousWebMercCenter != _dynamicZoomMap.CenterWebMerc)
+			{
+				Debug.Log("_previousWebMercCenter != _dynamicZoomMap.CenterWebMerc");
+				_previousWebMercCenter = _dynamicZoomMap.CenterWebMerc;
+				var remove = _activeTiles.ToList();
+				foreach (var r in remove) { RemoveTile(r); }
+			}
+
+
 			Vector3 localPosition = _referenceCamera.transform.position;
 			//close to ground, zoom in
 			if (cameraY < _cameraZoomingRangeMinY)
@@ -118,7 +133,7 @@
 			List<UnwrappedTileId> toRemove = _activeTiles.Except(tilesNeeded).ToList();
 			foreach (var t2r in toRemove) { RemoveTile(t2r); }
 
-			foreach (var tile in tilesNeeded)
+			foreach (var tile in tilesNeeded.Except(_activeTiles))
 			{
 				AddTile(tile);
 			}
@@ -144,16 +159,16 @@
 				hitPntUR = _referenceCamera.ViewportToWorldPoint(new Vector3(1, 1, _referenceCamera.transform.localPosition.y));
 			}
 
-			Vector2d centerLatLng = Conversions.MetersToLatLon(_dynamicZoomMap._centerWebMerc);
+			Vector2d centerLatLng = Conversions.MetersToLatLon(_dynamicZoomMap.CenterWebMerc);
 			//calculate factor to get from Unity units to WebMercator meters, tile size of 256
 			double factor = Conversions.GetTileScaleInMeters((float)centerLatLng.x, _dynamicZoomMap.Zoom) * 256 / _dynamicZoomMap.UnityTileSize;
 			//double factor = Conversions.GetTileScaleInMeters((float)_viewPortLatLngBounds.Center.y, _currentZoomLevel);
 
 			//convert Unity units to WebMercator and LatLng to get real world bounding box
-			double llx = _dynamicZoomMap._centerWebMerc.x + hitPntLL.x * factor;
-			double lly = _dynamicZoomMap._centerWebMerc.y + hitPntLL.z * factor;
-			double urx = _dynamicZoomMap._centerWebMerc.x + hitPntUR.x * factor;
-			double ury = _dynamicZoomMap._centerWebMerc.y + hitPntUR.z * factor;
+			double llx = _dynamicZoomMap.CenterWebMerc.x + hitPntLL.x * factor;
+			double lly = _dynamicZoomMap.CenterWebMerc.y + hitPntLL.z * factor;
+			double urx = _dynamicZoomMap.CenterWebMerc.x + hitPntUR.x * factor;
+			double ury = _dynamicZoomMap.CenterWebMerc.y + hitPntUR.z * factor;
 			llx = llx > 0 ? Math.Min(llx, Mapbox.Utils.Constants.WebMercMax) : Math.Max(llx, -Mapbox.Utils.Constants.WebMercMax);
 			lly = lly > 0 ? Math.Min(lly, Mapbox.Utils.Constants.WebMercMax) : Math.Max(lly, -Mapbox.Utils.Constants.WebMercMax);
 			urx = urx > 0 ? Math.Min(urx, Mapbox.Utils.Constants.WebMercMax) : Math.Max(urx, -Mapbox.Utils.Constants.WebMercMax);

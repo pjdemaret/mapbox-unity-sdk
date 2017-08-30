@@ -13,10 +13,10 @@
 	{
 
 		IMap _map { get; }
-		Queue<UnityTile> _inactiveTiles { get; set; }
+		Queue<UnityTile> InactiveTiles { get; }
 
-		AbstractTileFactory[] _factories { get; set; }
-		Dictionary<UnwrappedTileId, UnityTile> Tiles { get; set; }
+		AbstractTileFactory[] Factories { get; }
+		Dictionary<UnwrappedTileId, UnityTile> Tiles { get; }
 
 		ModuleState State { get; }
 

@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16785e6c00994f34a9e294579b5ee133, type: 3}
   m_Name: DynamicZoomMapVisualizer
   m_EditorClassIdentifier: 
-  unityfactories:
+  _factories:
   - {fileID: 11400000, guid: c246174e28872f84aafe54bd5b4ce0a9, type: 2}

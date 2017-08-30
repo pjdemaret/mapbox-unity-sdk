@@ -134,6 +134,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		internal void Recycle()
 		{
 			// TODO: to hide potential visual artifacts, use placeholder mesh / texture?
+			// MeshRenderer.material.mainTexture = null;
 
 			gameObject.SetActive(false);
 

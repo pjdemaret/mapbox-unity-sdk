@@ -77,6 +77,7 @@ namespace Mapbox.Map
 		public static HashSet<UnwrappedTileId> GetWithWebMerc(Vector2dBounds bounds, int zoom)
 		{
 			HashSet<UnwrappedTileId> tiles = new HashSet<UnwrappedTileId>();
+			HashSet<CanonicalTileId> canonicalTiles = new HashSet<CanonicalTileId>();
 
 			if (bounds.IsEmpty()) { return tiles; }
 
@@ -95,8 +96,15 @@ namespace Mapbox.Map
 			{
 				for (int y = neTile.Y; y <= swTile.Y; y++)
 				{
-					Debug.LogFormat("TileCover.GetWithWebMerc: {0}/{1}/{2}", zoom, x, y);
-					tiles.Add(new UnwrappedTileId(zoom, x, y));
+					UnwrappedTileId uwtid = new UnwrappedTileId(zoom, x, y);
+					//hack: currently too many tiles are created at lower zoom levels
+					//investigate formulas, this worked before
+					if (!canonicalTiles.Contains(uwtid.Canonical))
+					{
+						Debug.LogFormat("TileCover.GetWithWebMerc: {0}/{1}/{2}", zoom, x, y);
+						tiles.Add(uwtid);
+						canonicalTiles.Add(uwtid.Canonical);
+					}
 				}
 			}
 
@@ -140,10 +148,9 @@ namespace Mapbox.Map
 		{
 			// See:  https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Derivation_of_tile_names
 			double tileCount = Math.Pow(2, zoom);
+
 			//this SDK defines Vector2d.x as latitude and Vector2d.y as longitude
 			//same for WebMerc, so we have to flip x/y to make this formula work
-
-
 			double dblX = webMerc.y / Constants.WebMercMax;
 			double dblY = webMerc.x / Constants.WebMercMax;
 

@@ -12,15 +12,14 @@
 
 	public abstract class AbstractMapVisualizer : ScriptableObject, IMapVisualizer
 	{
-		[HideInInspector]
-		public AbstractTileFactory[] _factories { get { return unityfactories; } set { unityfactories = value; } }
+		public AbstractTileFactory[] Factories { get { return _factories; } }
 
 		[SerializeField]
-		public AbstractTileFactory[] unityfactories;
+		private AbstractTileFactory[] _factories;
 
 		public IMap _map { get; internal set; }
 
-		public Queue<UnityTile> _inactiveTiles { get; set; }
+		public Queue<UnityTile> InactiveTiles { get; set; }
 
 
 		public Dictionary<UnwrappedTileId, UnityTile> Tiles { get; set; }
@@ -52,10 +51,10 @@
 		{
 			_map = map;
 			Tiles = new Dictionary<UnwrappedTileId, UnityTile>();
-			_inactiveTiles = new Queue<UnityTile>();
+			InactiveTiles = new Queue<UnityTile>();
 			State = ModuleState.Initialized;
 
-			foreach (var factory in _factories)
+			foreach (var factory in Factories)
 			{
 				factory.Initialize(fileSource);
 				factory.OnFactoryStateChanged += UpdateState;
@@ -64,10 +63,10 @@
 
 		public void Destroy()
 		{
-			for (int i = 0; i < _factories.Length; i++)
+			for (int i = 0; i < Factories.Length; i++)
 			{
-				if (_factories[i] != null)
-					_factories[i].OnFactoryStateChanged -= UpdateState;
+				if (Factories[i] != null)
+					Factories[i].OnFactoryStateChanged -= UpdateState;
 			}
 		}
 
@@ -81,11 +80,11 @@
 			else if (State != ModuleState.Finished && factory.State == ModuleState.Finished)
 			{
 				var allFinished = true;
-				for (int i = 0; i < _factories.Length; i++)
+				for (int i = 0; i < Factories.Length; i++)
 				{
-					if (_factories[i] != null)
+					if (Factories[i] != null)
 					{
-						allFinished &= _factories[i].State == ModuleState.Finished;
+						allFinished &= Factories[i].State == ModuleState.Finished;
 					}
 				}
 				if (allFinished)
@@ -104,9 +103,9 @@
 		{
 			UnityTile unityTile = null;
 
-			if (_inactiveTiles.Count > 0)
+			if (InactiveTiles.Count > 0)
 			{
-				unityTile = _inactiveTiles.Dequeue();
+				unityTile = InactiveTiles.Dequeue();
 			}
 
 			if (unityTile == null)
@@ -117,7 +116,7 @@
 
 			unityTile.Initialize(_map, tileId);
 
-			foreach (var factory in _factories)
+			foreach (var factory in Factories)
 			{
 				factory.Register(unityTile);
 			}
@@ -133,9 +132,9 @@
 
 			unityTile.Recycle();
 			Tiles.Remove(tileId);
-			_inactiveTiles.Enqueue(unityTile);
+			InactiveTiles.Enqueue(unityTile);
 
-			foreach (var factory in _factories)
+			foreach (var factory in Factories)
 			{
 				factory.Unregister(unityTile);
 			}

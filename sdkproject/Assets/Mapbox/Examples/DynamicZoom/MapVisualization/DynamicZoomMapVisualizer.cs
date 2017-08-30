@@ -26,9 +26,9 @@
 		{
 			UnityTile unityTile = null;
 
-			if (_inactiveTiles.Count > 0)
+			if (InactiveTiles.Count > 0)
 			{
-				unityTile = _inactiveTiles.Dequeue();
+				unityTile = InactiveTiles.Dequeue();
 			}
 
 			if (unityTile == null)
@@ -37,11 +37,12 @@
 				unityTile.transform.SetParent(_map.Root, false);
 			}
 
+			DynamicZoomMap map = _map as DynamicZoomMap;
 			//HACK: switch COORDINATES - there's a bug somewhere with switched x<->y
-			Vector2d centerWebMercDUMMY = new Vector2d(_map.CenterMercator.y, _map.CenterMercator.x);
+			Vector2d centerWebMercDUMMY = new Vector2d(map.CenterWebMerc.y, map.CenterWebMerc.x);
 			UnwrappedTileId centerTile = TileCover.WebMercatorToTileId(centerWebMercDUMMY, _map.Zoom);
 			Vector2d centerTileCenter = Conversions.TileIdToCenterWebMercator(centerTile.X, centerTile.Y, _map.Zoom);
-			Vector2d shift = _map.CenterMercator - centerTileCenter;
+			Vector2d shift = map.CenterWebMerc - centerTileCenter;
 			//float factor = Conversions.GetTileScaleInMeters(_map.Zoom) * 256 / ((DynamicZoomMap)_map).UnityTileSize;
 			int unityTileSize = ((DynamicZoomMap)_map).UnityTileSize;
 			float factor = Conversions.GetTileScaleInMeters((float)_map.CenterLatitudeLongitude.x, _map.Zoom) * 256 / unityTileSize;
@@ -58,7 +59,7 @@
 
 			unityTile.Initialize(_map, tileId, position, unityTileScale);
 
-			foreach (var factory in _factories)
+			foreach (var factory in Factories)
 			{
 				factory.Register(unityTile);
 			}

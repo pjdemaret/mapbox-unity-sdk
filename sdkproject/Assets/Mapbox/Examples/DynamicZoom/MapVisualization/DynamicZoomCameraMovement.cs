@@ -49,7 +49,7 @@
 			//development short cut: reset center to 0/0 with right click
 			if (Input.GetMouseButton(1))
 			{
-				Map._centerWebMerc.x = Map._centerWebMerc.y = 0;
+				Map.CenterWebMerc.x = Map.CenterWebMerc.y = 0;
 				return;
 			}
 
@@ -75,8 +75,8 @@
 				xMove *= factor;
 				zMove *= factor;
 				Debug.LogFormat("xMove:{0} zMove:{1}", xMove, zMove);
-				Map._centerWebMerc.x += xMove;
-				Map._centerWebMerc.y += zMove;
+				Map.CenterWebMerc.x += xMove;
+				Map.CenterWebMerc.y += zMove;
 			}
 
 			//pan mouse
@@ -105,11 +105,11 @@
 					if (null != Map)
 					{
 						float factor = Conversions.GetTileScaleInMeters((float)Map.CenterLatitudeLongitude.x, Map.Zoom) * 256 / Map.UnityTileSize;
-						var centerOld = Map._centerWebMerc;
-						Map._centerWebMerc.x += offset.x * factor;
-						Map._centerWebMerc.y += offset.z * factor;
+						var centerOld = Map.CenterWebMerc;
+						Map.CenterWebMerc.x += offset.x * factor;
+						Map.CenterWebMerc.y += offset.z * factor;
 
-						Debug.LogFormat("old center:{0} new center:{1} offset:{2}", centerOld, Map._centerWebMerc, offset);
+						Debug.LogFormat("old center:{0} new center:{1} offset:{2}", centerOld, Map.CenterWebMerc, offset);
 					}
 				}
 			}

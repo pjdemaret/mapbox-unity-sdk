@@ -46,7 +46,10 @@ namespace Mapbox.Unity.Examples.DynamicZoom
 				if (rasterTile.HasError)
 				{
 					tile.RasterDataState = TilePropertyState.Error;
-					Debug.LogErrorFormat("{0}.{1}:{2}", _className, new System.Diagnostics.StackFrame().GetMethod().Name, rasterTile.ExceptionsAsString);
+					if (rasterTile.CurrentState != Tile.State.Canceled)
+					{
+						Debug.LogErrorFormat("{0}.{1}:{2}", _className, new System.Diagnostics.StackFrame().GetMethod().Name, rasterTile.ExceptionsAsString);
+					}
 					return;
 				}
 

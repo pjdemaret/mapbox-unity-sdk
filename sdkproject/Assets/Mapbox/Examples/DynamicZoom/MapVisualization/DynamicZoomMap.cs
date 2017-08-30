@@ -24,8 +24,10 @@
 		[SerializeField]
 		DynamicZoomCameraMovement _cameraMovement;
 
-		[HideInInspector]
-		public Vector2d _centerWebMerc;
+
+		public string _webMerc;
+
+		public Vector2d CenterWebMerc;
 
 		public int UnityTileSize { get { return (int)_unityTileSize; } }
 
@@ -38,8 +40,8 @@
 		{
 			base.Start();
 
-			_centerWebMerc = Conversions.GeoToWorldPosition(CenterLatitudeLongitude, new Vector2d(0, 0));
-			Debug.LogFormat("center, latLng:{0} webMerc:{1}", CenterLatitudeLongitude, _centerWebMerc);
+			CenterWebMerc = Conversions.GeoToWorldPosition(CenterLatitudeLongitude, new Vector2d(0, 0));
+			Debug.LogFormat("center, latLng:{0} webMerc:{1}", CenterLatitudeLongitude, CenterWebMerc);
 
 			if (null == _cameraMovement) { Debug.LogErrorFormat("{0}: camera movement not set", this.GetType().Name); }
 			_referenceCamera = _cameraMovement._referenceCamera;
@@ -56,7 +58,7 @@
 
 		private void Update()
 		{
-
+			_webMerc = CenterWebMerc.ToString();
 
 		}
 
