@@ -34,7 +34,12 @@ namespace Mapbox.Unity.Examples.DynamicZoom
 		{
 			Debug.LogFormat("{0}.{1} tile:{2}", _className, new System.Diagnostics.StackFrame().GetMethod().Name, tile.CanonicalTileId);
 
-			if (null == tile.MeshRenderer) { tile.gameObject.AddComponent<MeshRenderer>(); }
+			if (null == tile.MeshRenderer)
+			{
+				MeshRenderer mr = tile.gameObject.AddComponent<MeshRenderer>();
+				//avoid pink tiles on first use
+				mr.enabled = false;
+			}
 			if (tile.MeshFilter == null) { tile.gameObject.AddComponent<MeshFilter>(); }
 			tile.MeshFilter.sharedMesh = BuildQuad(tile);
 
