@@ -108,7 +108,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		public event Action<UnityTile> OnRasterDataChanged = delegate { };
 		public event Action<UnityTile> OnVectorDataChanged = delegate { };
 
-		internal void Initialize(IMap map, UnwrappedTileId tileId, Nullable<Vector3> pos = null, Nullable<Vector3> scale=null)
+		internal void Initialize(IMap map, UnwrappedTileId tileId, Nullable<Vector3> pos = null, Nullable<Vector3> scale = null)
 		{
 			//_relativeScale = 1 / Mathf.Cos(Mathf.Deg2Rad * (float)map.CenterLatitudeLongitude.x);
 			_rect = Conversions.TileBounds(tileId);
@@ -135,6 +135,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		{
 			// TODO: to hide potential visual artifacts, use placeholder mesh / texture?
 			// MeshRenderer.material.mainTexture = null;
+			MeshRenderer.enabled = false;
 
 			gameObject.SetActive(false);
 
@@ -226,6 +227,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 				_rasterData.Compress(false);
 			}
 
+			MeshRenderer.enabled = true;
 			RasterDataState = TilePropertyState.Loaded;
 			OnRasterDataChanged(this);
 		}
