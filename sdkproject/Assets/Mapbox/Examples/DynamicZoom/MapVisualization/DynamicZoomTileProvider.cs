@@ -160,10 +160,8 @@
 				hitPntUR = _referenceCamera.ViewportToWorldPoint(new Vector3(1, 1, _referenceCamera.transform.localPosition.y));
 			}
 
-			Vector2d centerLatLng = Conversions.MetersToLatLon(_dynamicZoomMap.CenterWebMerc);
-			//calculate factor to get from Unity units to WebMercator meters, tile size of 256
-			double factor = Conversions.GetTileScaleInMeters((float)centerLatLng.x, _dynamicZoomMap.Zoom) * 256 / _dynamicZoomMap.UnityTileSize;
-			//double factor = Conversions.GetTileScaleInMeters((float)_viewPortLatLngBounds.Center.y, _currentZoomLevel);
+			//get tile scale at equator, otherwise calucations don't work at higher latitudes
+			double factor = Conversions.GetTileScaleInMeters(0, _dynamicZoomMap.Zoom) * 256 / _dynamicZoomMap.UnityTileSize;
 
 			//convert Unity units to WebMercator and LatLng to get real world bounding box
 			double llx = _dynamicZoomMap.CenterWebMerc.x + hitPntLL.x * factor;
