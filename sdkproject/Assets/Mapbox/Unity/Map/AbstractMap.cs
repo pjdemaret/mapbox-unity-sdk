@@ -120,7 +120,7 @@
 			var referenceTileRect = Conversions.TileBounds(TileCover.CoordinateToTileId(_mapCenterLatitudeLongitude, _zoom));
 			_mapCenterMercator = referenceTileRect.Center;
 
-			//_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
+			_worldRelativeScale = (float)(_unityTileSize / referenceTileRect.Size.x);
 			//_worldRelativeScale = 0.001f;
 			_worldRelativeScale = 1f;
 			Root.localScale = Vector3.one * _worldRelativeScale;

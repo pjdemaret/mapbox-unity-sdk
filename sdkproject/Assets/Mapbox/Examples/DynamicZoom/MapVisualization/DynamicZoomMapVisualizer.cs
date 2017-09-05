@@ -35,6 +35,13 @@
 			{
 				unityTile = new GameObject().AddComponent<UnityTile>();
 				unityTile.transform.SetParent(_map.Root, false);
+				if (null == unityTile.MeshRenderer)
+				{
+					MeshRenderer mr = unityTile.gameObject.AddComponent<MeshRenderer>();
+					//avoid pink tiles on first use
+					mr.enabled = false;
+				}
+				if (unityTile.MeshFilter == null) { unityTile.gameObject.AddComponent<MeshFilter>(); }
 			}
 
 			DynamicZoomMap map = _map as DynamicZoomMap;

@@ -147,6 +147,7 @@ MonoBehaviour:
   MinZoom: 0
   MaxZoom: 22
   _cameraMovement: {fileID: 161680365}
+  _webMerc: 
 --- !u!4 &161680363
 Transform:
   m_ObjectHideFlags: 0
