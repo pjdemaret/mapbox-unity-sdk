@@ -110,7 +110,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 		public event Action<UnityTile> OnRasterDataChanged = delegate { };
 		public event Action<UnityTile> OnVectorDataChanged = delegate { };
 
-		internal void Initialize(IMap map, UnwrappedTileId tileId, float scale)
+		internal void Initialize(IMap map, UnwrappedTileId tileId, float scale, Nullable<Vector3> pos = null)
 		{
 			TileScale = scale;
 			_relativeScale = 1 / Mathf.Cos(Mathf.Deg2Rad * (float)map.CenterLatitudeLongitude.x);
@@ -118,8 +118,15 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			_unwrappedTileId = tileId;
 			_canonicalTileId = tileId.Canonical;
 			gameObject.name = _canonicalTileId.ToString();
-			var position = new Vector3((float)(_rect.Center.x - map.CenterMercator.x) * TileScale, 0, (float)(_rect.Center.y - map.CenterMercator.y) * TileScale);
-			transform.localPosition = position;
+			if (!pos.HasValue)
+			{
+				var position = new Vector3((float)(_rect.Center.x - map.CenterMercator.x) * TileScale, 0, (float)(_rect.Center.y - map.CenterMercator.y) * TileScale);
+				transform.localPosition = position;
+			}
+			else
+			{
+				transform.localPosition = pos.Value;
+			}
 			gameObject.SetActive(true);
 		}
 

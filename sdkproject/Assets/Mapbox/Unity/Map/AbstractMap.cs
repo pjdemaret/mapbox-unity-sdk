@@ -40,13 +40,13 @@
 		}
 
 		[SerializeField]
-		AbstractTileProvider _tileProvider;
+		internal AbstractTileProvider _tileProvider;
 
 		[SerializeField]
-		MapVisualizer _mapVisualizer;
+		AbstractMapVisualizer _mapVisualizer;
 
 		[SerializeField]
-		float _unityTileSize = 100;
+		internal float _unityTileSize = 100;
 		[SerializeField]
 		bool _snapMapHeightToZero = true;
 

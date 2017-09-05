@@ -114,7 +114,7 @@
 				unityTile.transform.SetParent(_map.Root, false);
 			}
 
-			unityTile.Initialize(_map, tileId);
+			unityTile.Initialize(_map, tileId, _map.WorldRelativeScale);
 
 			foreach (var factory in Factories)
 			{

@@ -53,6 +53,7 @@
 			//float factor = Conversions.GetTileScaleInMeters(_map.Zoom) * 256 / ((DynamicZoomMap)_map).UnityTileSize;
 			int unityTileSize = ((DynamicZoomMap)_map).UnityTileSize;
 			float factor = Conversions.GetTileScaleInMeters((float)_map.CenterLatitudeLongitude.x, _map.Zoom) * 256 / unityTileSize;
+
 			Vector3 unityTileScale = new Vector3(unityTileSize, 1, unityTileSize);
 
 			//position the tile relative to the center tile of the current viewport using the tile id
@@ -64,7 +65,8 @@
 				, (centerTile.Y - tileId.Y) * unityTileSize - (float)shift.y / factor
 			);
 
-			unityTile.Initialize(_map, tileId, position, unityTileScale);
+			unityTile.Initialize(_map, tileId, (float)unityTileSize, position);
+			//unityTile.Initialize(_map, tileId, unityTileSize);
 
 			foreach (var factory in Factories)
 			{
