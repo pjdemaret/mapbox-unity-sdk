@@ -65,8 +65,15 @@
 				, (centerTile.Y - tileId.Y) * unityTileSize - (float)shift.y / factor
 			);
 
+
+			unityTile.transform.localScale = unityTileScale;
 			unityTile.Initialize(_map, tileId, (float)unityTileSize, position);
 			//unityTile.Initialize(_map, tileId, unityTileSize);
+
+			//unityTile.Initialize(_map, tileId, 1f);
+			//unityTile.TileScale = (float)(unityTileSize / unityTile.Rect.Size.x);
+			//unityTile.transform.position *= unityTile.TileScale;
+
 
 			foreach (var factory in Factories)
 			{
