@@ -60,6 +60,7 @@
 			if (0 != y)
 			{
 				_referenceCamera.transform.Translate(new Vector3(0, y, 0), Space.World);
+
 				// TODO:
 				//current approach doesn't work nicely when camera is tilted
 				//maybe move camera so that center of viewport is always at 0/0

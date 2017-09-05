@@ -87,6 +87,11 @@
 			verts[1] = new Vector3(2048f, 0, 2048f);
 			verts[3] = new Vector3(2048f, 0, -2048f);
 
+			verts[0] = new Vector3(-.5f, 0, .5f);
+			verts[2] = new Vector3(-.5f, 0, -.5f);
+			verts[1] = new Vector3(.5f, 0, .5f);
+			verts[3] = new Vector3(.5f, 0, -.5f);
+
 			unityMesh.vertices = verts;
 
 			var trilist = new int[6] { 0, 1, 2, 1, 3, 2 };

@@ -14,10 +14,10 @@ MonoBehaviour:
   _mapIdType: 1
   _customStyle:
     Name: 
-    Id: mapbox.satellite
+    Id: mapbox://styles/mapbox/satellite-v9
     Modified: 
     UserName: 
-  _mapId: mapbox.satellite
+  _mapId: mapbox://styles/mapbox/satellite-v9
   _useCompression: 1
   _useMipMap: 0
   _useRetina: 0
