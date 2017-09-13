@@ -112,9 +112,10 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 		internal void Initialize(IMap map, UnwrappedTileId tileId, float scale, Nullable<Vector3> pos = null)
 		{
-			TileScale = scale;
+			
 			_relativeScale = 1 / Mathf.Cos(Mathf.Deg2Rad * (float)map.CenterLatitudeLongitude.x);
 			_rect = Conversions.TileBounds(tileId);
+			TileScale = scale;
 			_unwrappedTileId = tileId;
 			_canonicalTileId = tileId.Canonical;
 			gameObject.name = _canonicalTileId.ToString();

@@ -75,10 +75,10 @@
 			var unityMesh = new Mesh();
 			var verts = new Vector3[4];
 
-			verts[0] = tile.TileScale * ((tile.Rect.Min - tile.Rect.Center).ToVector3xz());
-			verts[2] = tile.TileScale * (new Vector3((float)(tile.Rect.Min.x - tile.Rect.Center.x), 0, (float)(tile.Rect.Max.y - tile.Rect.Center.y)));
-			verts[1] = tile.TileScale * (new Vector3((float)(tile.Rect.Max.x - tile.Rect.Center.x), 0, (float)(tile.Rect.Min.y - tile.Rect.Center.y)));
-			verts[3] = tile.TileScale * ((tile.Rect.Max - tile.Rect.Center).ToVector3xz());
+			//verts[0] = tile.TileScale * ((tile.Rect.Min - tile.Rect.Center).ToVector3xz());
+			//verts[2] = tile.TileScale * (new Vector3((float)(tile.Rect.Min.x - tile.Rect.Center.x), 0, (float)(tile.Rect.Max.y - tile.Rect.Center.y)));
+			//verts[1] = tile.TileScale * (new Vector3((float)(tile.Rect.Max.x - tile.Rect.Center.x), 0, (float)(tile.Rect.Min.y - tile.Rect.Center.y)));
+			//verts[3] = tile.TileScale * ((tile.Rect.Max - tile.Rect.Center).ToVector3xz());
 
 			verts[0] = new Vector3(-.5f, 0, .5f);
 			verts[2] = new Vector3(-.5f, 0, -.5f);

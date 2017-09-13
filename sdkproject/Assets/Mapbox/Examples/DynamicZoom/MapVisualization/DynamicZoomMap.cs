@@ -41,6 +41,7 @@
 			base.Start();
 
 			CenterWebMerc = Conversions.GeoToWorldPosition(CenterLatitudeLongitude, new Vector2d(0, 0));
+			CenterWebMerc = Conversions.LatLonToMeters(CenterLatitudeLongitude);
 			Debug.LogFormat("center, latLng:{0} webMerc:{1}", CenterLatitudeLongitude, CenterWebMerc);
 
 			if (null == _cameraMovement) { Debug.LogErrorFormat("{0}: camera movement not set", this.GetType().Name); }
@@ -59,7 +60,7 @@
 		private void Update()
 		{
 			_webMerc = CenterWebMerc.ToString();
-
+			CenterLatitudeLongitude = Conversions.MetersToLatLon(CenterWebMerc);
 		}
 
 

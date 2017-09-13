@@ -94,6 +94,10 @@
 				var remove = _activeTiles.ToList();
 				foreach (var r in remove) { RemoveTile(r); }
 			}
+			else
+			{
+				Debug.Log("center is the same");
+			}
 
 
 			Vector3 localPosition = _referenceCamera.transform.position;
@@ -133,8 +137,9 @@
 
 			List<UnwrappedTileId> toRemove = _activeTiles.Except(tilesNeeded).ToList();
 			foreach (var t2r in toRemove) { RemoveTile(t2r); }
-
-			foreach (var tile in tilesNeeded.Except(_activeTiles))
+			var finalTilesNeeded = tilesNeeded.Except(_activeTiles);
+			Debug.LogFormat("final tiles needed: {0}", finalTilesNeeded.Count());
+			foreach (var tile in finalTilesNeeded)
 			{
 				AddTile(tile);
 			}

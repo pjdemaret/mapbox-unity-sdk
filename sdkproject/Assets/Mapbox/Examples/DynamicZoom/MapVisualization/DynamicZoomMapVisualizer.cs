@@ -50,9 +50,10 @@
 			UnwrappedTileId centerTile = TileCover.WebMercatorToTileId(centerWebMercDUMMY, _map.Zoom);
 			Vector2d centerTileCenter = Conversions.TileIdToCenterWebMercator(centerTile.X, centerTile.Y, _map.Zoom);
 			Vector2d shift = map.CenterWebMerc - centerTileCenter;
-			//float factor = Conversions.GetTileScaleInMeters(_map.Zoom) * 256 / ((DynamicZoomMap)_map).UnityTileSize;
-			int unityTileSize = ((DynamicZoomMap)_map).UnityTileSize;
-			float factor = Conversions.GetTileScaleInMeters((float)_map.CenterLatitudeLongitude.x, _map.Zoom) * 256 / unityTileSize;
+			//float factor = Conversions.GetTileScaleInMeters((float)map.CenterLatitudeLongitude.x, map.Zoom) * 256 / ((DynamicZoomMap)_map).UnityTileSize;
+			int unityTileSize = map.UnityTileSize;
+			// get factor at equator to avoid shifting errors at higher latitudes
+			float factor = Conversions.GetTileScaleInMeters(0f, _map.Zoom) * 256 / unityTileSize;
 
 			Vector3 unityTileScale = new Vector3(unityTileSize, 1, unityTileSize);
 
@@ -66,14 +67,9 @@
 			);
 
 
+			unityTile.Initialize(_map, tileId, 1f / factor/*, position*/);
+			unityTile.transform.localPosition = position;
 			unityTile.transform.localScale = unityTileScale;
-			unityTile.Initialize(_map, tileId, (float)unityTileSize, position);
-			//unityTile.Initialize(_map, tileId, unityTileSize);
-
-			//unityTile.Initialize(_map, tileId, 1f);
-			//unityTile.TileScale = (float)(unityTileSize / unityTile.Rect.Size.x);
-			//unityTile.transform.position *= unityTile.TileScale;
-
 
 			foreach (var factory in Factories)
 			{

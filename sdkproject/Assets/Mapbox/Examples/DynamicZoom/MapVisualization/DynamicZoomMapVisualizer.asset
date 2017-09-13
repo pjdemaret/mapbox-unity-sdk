@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: DynamicZoomMapVisualizer
   m_EditorClassIdentifier: 
   _factories:
-  - {fileID: 11400000, guid: 5962f269ff9392341806bbe087abf85d, type: 2}
   - {fileID: 11400000, guid: 0db7771d70d7fc041a013fd2d957eec9, type: 2}
+  - {fileID: 11400000, guid: 5962f269ff9392341806bbe087abf85d, type: 2}
